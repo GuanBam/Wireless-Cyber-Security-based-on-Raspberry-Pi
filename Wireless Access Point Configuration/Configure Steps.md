@@ -40,7 +40,7 @@ add below information to the file.
 dhcp-range= "starting IP for connecter","ending IP for connecter","subnetmask","expeired time"
 ```
 interface=wlan0
-dhcp-range=192.168.4.2,192.168.2.20,255.255.255.0,24h
+dhcp-range=192.168.2.2,192.168.2.20,255.255.255.0,24h
 ```
 d. start dnsmasq service or reload it if if it's on
 ```

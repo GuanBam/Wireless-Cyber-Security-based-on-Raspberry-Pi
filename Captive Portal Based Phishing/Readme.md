@@ -13,12 +13,12 @@ Captive Portal will need a web site for authentication, and some firewall rules 
 ```
 #sudo iptables -t mangle -N portal
 
-#sudo iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp –dport 1:65534 -j portal
-#sudo iptables -t mangle -A PREROUTING -i wlan0 -p udp -m udp –dport 1:65534 -j portal
+#sudo iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp –-dport 1:65534 -j portal
+#sudo iptables -t mangle -A PREROUTING -i wlan0 -p udp -m udp –-dport 1:65534 -j portal
 
-#sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark –mark 99 -m tcp –dport 1:65534 -j DNAT –to-destination 192.168.2.1:80
+#sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark –-mark 99 -m tcp –-dport 1:65534 -j DNAT -–to-destination 192.168.2.1:80
 
-#sudo iptables -t mangle -A portal -j MARK –set-mark 99
+#sudo iptables -t mangle -A portal -j MARK –-set-mark 99
 
 #sudo iptables -t mangle -I portal 1 -d 192.168.2.1 -p tcp -m tcp -j RETURN
 #sudo iptables -t mangle -I portal 1 -d 192.168.2.1 -p udp --dport 1:52 -j DROP
@@ -51,6 +51,7 @@ Add rewrite rules as below
 </VirtualHost>
 ```
 ```
+#sudo a2enmod rewrite
 #sudo service apache2 restart
 ```
 

@@ -18,8 +18,7 @@
         #psw{height:30px;}
     </style>
 </head>
-<?php
-if(isset($_GET['']))
+
 <body>
     <div class="space"></div>
     <div class="ALL" id="all"><div class="space"></div>

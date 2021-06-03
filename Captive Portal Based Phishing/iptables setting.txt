@@ -1,0 +1,30 @@
+#############################################################
+#增加 iptables 规则，创建 portal 认证链
+sudo iptables -t mangle -N portal
+#将interface eth0 的 tcp udp 端口1-65534 进行portal链处理
+sudo iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp --dport 1:65534 -j portal
+sudo iptables -t mangle -A PREROUTING -i wlan0 -p udp -m udp --dport 1:65534 -j portal
+#将从interface wlan0进入的 tcp 标记为99的包丢弃 并转至 192.168.4.1
+sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark --mark 99 -m tcp 
+     --dport 1:65534 -j DNAT --to-destination 192.168.4.1:80
+#在mangle链新建规则 将portal 认证链的包标记为 99.
+sudo iptables -t mangle -A portal -j MARK --set-mark 99
+#插入规则 目标地址 指定协议 端口 丢弃UDP 包
+sudo iptables -t mangle -I portal 1 -d 192.168.4.1 -p tcp -m tcp -j RETURN
+sudo iptables -t mangle -I portal 1 -d 192.168.4.1 -p udp --dport 1:52 -j DROP
+sudo iptables -t mangle -I portal 1 -d 192.168.4.1 -p udp --dport 54:65534 -j DROP
+#########################################################################
+#sudo iptables -t mangle -I portal 1 -d 192.168.0.20 -p tcp -m tcp -j RETURN
+#########################################################################
+#未验证用户禁止上网，但排除第三方认证 portal(在 FORWARD 链进行)
+#丢弃标记为 99 的包， 接收 地址为192.168.4.1 的包
+sudo iptables -t filter -A FORWARD -m mark --mark 99 -j DROP
+sudo iptables -t filter -A FORWARD -m mark --mark 99 -d 192.168.4.1 -j ACCEPT
+
+################################未使用
+#未验证用户禁止上网，但排除第三方认证 portal(在 INPUT 链进行，以防用户使用 squid 等代理上网)
+sudo iptables -t filter -A INPUT -p tcp --dport 80 -j ACCEPT
+sudo iptables -t filter -A INPUT -p udp --dport 53 -j ACCEPT
+sudo iptables -t filter -A INPUT -m mark --mark 99 -j DROP
+sudo iptables -t filter -A INPUT -m mark --mark 99 -d 192.168.4.1 -j ACCEPT
+###################################################################

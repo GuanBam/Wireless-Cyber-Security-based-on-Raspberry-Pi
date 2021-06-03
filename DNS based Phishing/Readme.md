@@ -57,7 +57,7 @@ fclose($fo);
 At the end of the php, you may redirect the post request to the right url, so user can finish his login action and won't notice anything wrong.
 In default, the php file will not have access to write in files, so we need do this step to authorize it.
 ```
-#sudo chown -R www-data/home/pi/Desktop
+#sudo chown -R www-data /home/pi/Desktop
 ```
 ## 4. DNS Configuration
 a. set configuration path
@@ -79,7 +79,7 @@ zone "linkedin.com"{
 };
 zone "2.168.192.in-addr.arpa"{
       type master;
-      file "etc/bind/192.168.2.db";
+      file "/etc/bind/192.168.2.db";
 };
 ```
 Configure the forward lookup file

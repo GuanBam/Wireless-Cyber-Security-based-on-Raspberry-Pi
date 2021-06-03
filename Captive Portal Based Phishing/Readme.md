@@ -72,3 +72,15 @@ exit;
 ```
 ## 5. Create website
 the index.php example is given.
+The php will run shell command to enable the user connect to the Internet.
+That will required sudo Authority.
+Go to modify the /etc/sudoers
+```
+sudo nano /etc/sudoers
+```
+Set user group as nopassword request for sudo.
+"www-data" should be the default name for apache2 server user group.
+```
+www-data  ALL=(ALL:ALL) ALL
+%www-data ALL=(ALL:ALL) NOPASSWD:ALL
+```

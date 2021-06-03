@@ -66,7 +66,7 @@ sudo nano /etc/bind/named.conf.options
 ```
 Add below statement in "options" block after "directory" pahth.
 ```
-Dump-file "var/cache/bind/dump.db";
+Dump-file "/var/cache/bind/dump.db";
 ```
 Configure the path of action file when certain Domain or IP visited.
 ```
